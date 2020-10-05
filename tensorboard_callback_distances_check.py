@@ -1,4 +1,4 @@
-from identification.utils.utils import compute_eer, return_distances_as_array
+from iembeddings_utils import compute_eer, return_distances_as_array
 import time
 import numpy as np
 import os
