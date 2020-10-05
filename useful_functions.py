@@ -97,3 +97,23 @@ def reverse_fit_img_into_square(img, cval=0):
             img_array = img_array[:, 0:i, :]
             break
     return Image.fromarray(img_array)
+
+
+def crop_img(bb, img_path, cropped_img_path):
+    img = Image.open(img_path)
+    img = image_transpose_exif(img)
+    width, height = img.size
+    x1 = round((bb[0] - bb[2]/2) * width)
+    x2 = round((bb[0] + bb[2]/2) * width)
+    y1 = round((bb[1] - bb[3]/2) * height)
+    y2 = round((bb[1] + bb[3]/2) * height)
+    left, top, right, bottom = x1, y1, x2, y2
+    cropped = img.crop((left, top, right, bottom))
+    cropped.save(cropped_img_path)
+
+    if debug:
+        plt.imshow(cropped)
+        plt.show()
+        input("Press Enter to continue...")
+
+    return x1, y1, x2, y2
